@@ -1,6 +1,6 @@
-# TakehomeBootstrap
+# Flash Card App Take-Home Assessment 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+Please see the provided requirements document for project guidance after cloning this repo.
 
 ## Development server
 
