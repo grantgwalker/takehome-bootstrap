@@ -1,17 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { catchError, from, map, of, switchMap } from 'rxjs';
 import { addOneFlashCardAPI, addOneFlashCardAPIFailure, addOneFlashCardAPISuccess } from './flash-cards.reducer';
 
 @Injectable()
 export class FlashCardsEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private http: HttpClient
-  ) {}
+  actions$ = inject(Actions);
+  http = inject(HttpClient);
 
   // TODO: Implement an effect to save flash cards to a backend
   // NOTE: This is an example of how you might implement an effect to save flash cards to a backend.
