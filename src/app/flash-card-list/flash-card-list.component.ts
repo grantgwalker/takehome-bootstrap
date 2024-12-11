@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
   standalone: true,
   imports: [AsyncPipe, FlashCardComponent],
   templateUrl: './flash-card-list.component.html',
-  styleUrl: './flash-card-list.component.scss'
+  styleUrl: './flash-card-list.component.css'
 })
 export class FlashCardListComponent implements OnInit {
   store = inject(Store);

@@ -6,7 +6,7 @@ import { FlashCard } from '../app.models';
   standalone: true,
   imports: [],
   templateUrl: './flash-card.component.html',
-  styleUrl: './flash-card.component.scss'
+  styleUrl: './flash-card.component.css'
 })
 export class FlashCardComponent {
   flashCard = input.required<FlashCard>();
