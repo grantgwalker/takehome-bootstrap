@@ -10,3 +10,8 @@ export const selectFlashCardsState =
  * @description Selects all flash cards from the NGRX store
  */
 export const selectAllFlashCards = createSelector(selectFlashCardsState, selectAll);
+
+/**
+ * @description Selects specified flash card from the NGRX store
+ */
+export const selectFlashCardById = (id: string) => createSelector(selectFlashCardsState, selectIds);
