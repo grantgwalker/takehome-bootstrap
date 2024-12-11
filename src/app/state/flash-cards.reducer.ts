@@ -41,7 +41,74 @@ export const addOneFlashCardAPIFailure = createAction(
   props<{ flashCard: FlashCard, error: any }>(),
 );
 
-// TODO: Add a delete and update action (with API versions)
+// TODO: Add an update action (with API versions)
+/**
+ * @description update specified flash card to the state
+ */
+export const updateFlashCard = createAction(
+  '[Flash Cards] Update',
+  props<{ flashCard: FlashCard }>(),
+);
+
+/**
+ * @description updates specified flashcard to the database, then
+ * update the state with the new flash card
+ */
+export const updateFlashCardAPI = createAction(
+  '[Flash Cards] Update (API)',
+  props<{ flashCard: FlashCard }>(),
+);
+/**
+ * @description This action is called when the API call
+ * to update a flash card is successful
+ */
+export const updateFlashCardAPISuccess = createAction(
+  '[Flash Cards] Update (API) Success',
+  props<{ flashCard: FlashCard }>(),
+);
+/**
+ * @description This action is called when the API call
+ * fails to update a flash card
+ */
+export const updateFlashCardAPIFailure = createAction(
+  '[Flash Cards] Update (API) Failure',
+  props<{ flashCard: FlashCard, error: any }>(),
+);
+
+// TODO: Add a delete action (with API versions)
+/**
+ * @description deletes specified flash card from the state
+ */
+export const deleteFlashCard = createAction(
+  '[Flash Cards] Delete',
+  props<{ id: string }>(),
+);
+
+/**
+ * @description delete specified flashcard from the database, then
+ * update the state without the new flash card
+ */
+export const deleteFlashCardAPI = createAction(
+  '[Flash Cards] Delete (API)',
+  props<{ id: string }>(),
+);
+/**
+ * @description This action is called when the API call
+ * to delete a flash card is successful
+ */
+export const deleteFlashCardAPISuccess = createAction(
+  '[Flash Cards] Delete (API) Success',
+  props<{ id: string }>(),
+);
+/**
+ * @description This action is called when the API call
+ * fails to delete a flash card
+ */
+export const deleteFlashCardAPIFailure = createAction(
+  '[Flash Cards] Delete (API) Failure',
+  props<{ id: string }>(),
+);
+
 
 export const reducer = createReducer(
   initialState,

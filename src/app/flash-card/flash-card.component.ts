@@ -22,7 +22,7 @@ export class FlashCardComponent {
   }
 
   delete() {
-    // TODO: Implement delete functionality
+    this.delete();
   }
   
   edit() {
