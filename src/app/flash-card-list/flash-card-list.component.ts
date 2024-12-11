@@ -20,7 +20,6 @@ export class FlashCardListComponent implements OnInit {
   ngOnInit(): void {
     // Inject example cards
     // Since this isn't hooked up to a backend, we generate UUIDs here
-    // TODO: Implement 
     this.store.dispatch(addOneFlashCard({
       flashCard: {
         id: uuidv4(),
