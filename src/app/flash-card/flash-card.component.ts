@@ -12,6 +12,8 @@ export class FlashCardComponent {
   flashCard = input.required<FlashCard>();
   expanded = false;
   showAnswer = false;
+  editMode = false;
+  
 
   toggle() {
     this.expanded = !this.expanded;
@@ -27,5 +29,6 @@ export class FlashCardComponent {
   
   edit() {
     // TODO: Implement edit functionality
+    this.editMode = !this.editMode;
   }
 }

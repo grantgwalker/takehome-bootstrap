@@ -41,6 +41,23 @@
       @if (showAnswer) {
         <div class="text-end">{{ flashCard().answer }}</div>
       }
+      <!-- TODO: Add edit logic
+          If editmode 
+          allow user input for question 
+          allow user input for answer
+          on save update flashcard -->
+      <!-- @if (editMode) {
+        <input
+          type="text"
+          class="p-2 rounded-md outline outline-1 outline-black/5"
+          [(ngModel)]="flashCard().question"
+        />
+        <input
+          type="text"
+          class="p-2 rounded-md outline outline-1 outline-black/5"
+          [(ngModel)]="flashCard().answer"
+        />
+      } -->
     </div>
   </div>
 </div>

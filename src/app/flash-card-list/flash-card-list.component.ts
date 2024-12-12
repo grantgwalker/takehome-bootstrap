@@ -1,10 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectAllFlashCards } from '../state/flash-cards.selectors';
-import { AsyncPipe } from '@angular/common';
-import { addOneFlashCard } from '../state/flash-cards.reducer';
-import { FlashCardComponent } from '../flash-card/flash-card.component';
 import { v4 as uuidv4 } from 'uuid';
+import { FlashCardComponent } from '../flash-card/flash-card.component';
+import { addOneFlashCard } from '../state/flash-cards.reducer';
+import { selectAllFlashCards } from '../state/flash-cards.selectors';
 
 @Component({
   selector: 'app-flash-card-list',
@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class FlashCardListComponent implements OnInit {
   store = inject(Store);
-  flashCards$ = this.store.select(selectAllFlashCards);
+  allFlashCards = this.store.select(selectAllFlashCards);
 
   ngOnInit(): void {
     // Inject example cards
@@ -34,5 +34,18 @@ export class FlashCardListComponent implements OnInit {
         answer: 'Madrid',
       }
     }));
+  }
+
+  updateFlashCard(flashCardID: string): void {
+    // Update a flash card
+    // For example, we could update the question of the first flash card
+  //   this.card = selectFlashCardById(flashCardID);
+  //   this.store.dispatch(updateFlashCard({
+  //     flashCard: {
+  //       id: card.edit().id,
+  //       question: 'What is the capital of Spain?',
+  //       answer: 'Madrid',
+  //     }
+  // }))
   }
 }
