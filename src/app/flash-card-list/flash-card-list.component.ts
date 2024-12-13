@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { v4 as uuidv4 } from 'uuid';
 import { FlashCard } from '../app.models';
 import { FlashCardComponent } from '../flash-card/flash-card.component';
-import { addOneFlashCardAction, deleteFlashCardAction } from '../state/flash-cards.reducer';
+import { addOneFlashCardAction, deleteFlashCardAction, updateFlashCardAction } from '../state/flash-cards.reducer';
 import { selectAllFlashCards } from '../state/flash-cards.selectors';
 
 @Injectable({ providedIn: 'root' })
@@ -49,16 +49,8 @@ export class FlashCardListComponent implements OnInit {
     this.store.dispatch(deleteFlashCardAction({ id: flashCardID }));
   }
 
-  updateFlashCard(flashCardID: string): void {
+  updateFlashCard(flashCard: FlashCard): void {
     // Update a flash card
-    // For example, we could update the question of the first flash card
-  //   this.card = selectFlashCardById(flashCardID);
-  //   this.store.dispatch(updateFlashCard({
-  //     flashCard: {
-  //       id: card.edit().id,
-  //       question: 'What is the capital of Spain?',
-  //       answer: 'Madrid',
-  //     }
-  // }))
+    this.store.dispatch(updateFlashCardAction({ flashCard }));
   }
 }

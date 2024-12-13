@@ -1,11 +1,12 @@
 import { Component, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { FlashCard } from '../app.models';
 import { FlashCardListComponent } from '../flash-card-list/flash-card-list.component';
 
 @Component({
   selector: 'app-flash-card',
   standalone: true,
-  imports: [],
+  imports: [ RouterLink, FlashCardListComponent ],
   templateUrl: './flash-card.component.html',
   styleUrl: './flash-card.component.css'
 })
@@ -28,8 +29,33 @@ export class FlashCardComponent {
     this.FlashCardListComponent.deleteFlashCard(this.flashCard().id);
   }
   
-  edit() {
+  editToggle() {
     // TODO: Implement edit functionality
     this.editMode = !this.editMode;
   }
+
+  updateCard() {
+    this.editToggle();
+
+    // Get the input element using its ID
+    const questionInput = document.getElementById("question") as HTMLInputElement;
+    // Get the value from the input element
+    const question = questionInput.value;
+    // Store the value in a variable
+    let questionString: string = question;
+
+    // Get the input element using its ID
+    const answerInput = document.getElementById("answer") as HTMLInputElement;
+    // Get the value from the input element
+    const answer = answerInput.value;
+    // Store the value in a variable
+    let answerString: string = answer;
+
+    this.FlashCardListComponent.updateFlashCard({
+      id: this.flashCard().id,
+      question: questionString,
+      answer: answerString
+    });
+  }
+
 }
