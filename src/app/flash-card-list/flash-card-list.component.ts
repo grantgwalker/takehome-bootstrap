@@ -1,11 +1,13 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { v4 as uuidv4 } from 'uuid';
+import { FlashCard } from '../app.models';
 import { FlashCardComponent } from '../flash-card/flash-card.component';
 import { addOneFlashCard } from '../state/flash-cards.reducer';
 import { selectAllFlashCards } from '../state/flash-cards.selectors';
 
+@Injectable({ providedIn: 'root' })
 @Component({
   selector: 'app-flash-card-list',
   standalone: true,
@@ -34,6 +36,11 @@ export class FlashCardListComponent implements OnInit {
         answer: 'Madrid',
       }
     }));
+  }
+
+  addFlashCard(flashCard: FlashCard): void {
+    // flash card must be wrapped with '{}' to be passed as an object instead of the flash card itself
+    this.store.dispatch(addOneFlashCard({ flashCard }));
   }
 
   updateFlashCard(flashCardID: string): void {

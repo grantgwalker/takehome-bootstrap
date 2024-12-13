@@ -47,7 +47,7 @@ export const addOneFlashCardAPIFailure = createAction(
  */
 export const updateFlashCard = createAction(
   '[Flash Cards] Update',
-  props<{ id: string }>(),
+  props<{ flashCard: FlashCard }>(),
 );
 
 /**
@@ -56,7 +56,7 @@ export const updateFlashCard = createAction(
  */
 export const updateFlashCardAPI = createAction(
   '[Flash Cards] Update (API)',
-  props<{ id: string }>(),
+  props<{ flashCard: FlashCard }>(),
 );
 /**
  * @description This action is called when the API call
@@ -64,7 +64,7 @@ export const updateFlashCardAPI = createAction(
  */
 export const updateFlashCardAPISuccess = createAction(
   '[Flash Cards] Update (API) Success',
-  props<{ id: string }>(),
+  props<{ flashCard: FlashCard }>(),
 );
 /**
  * @description This action is called when the API call
@@ -72,7 +72,7 @@ export const updateFlashCardAPISuccess = createAction(
  */
 export const updateFlashCardAPIFailure = createAction(
   '[Flash Cards] Update (API) Failure',
-  props<{ id: string, error: any }>(),
+  props<{ flashCard: FlashCard, error: any }>(),
 );
 
 // TODO: Add a delete action (with API versions)
@@ -122,4 +122,11 @@ export const reducer = createReducer(
   on(addOneFlashCardAPISuccess, (state, { flashCard }) =>
     adapter.addOne(flashCard, state),
   ),
+
+  // Remove specified flash card
+  on(deleteFlashCard, (state, { id }) =>
+    adapter.removeOne(id, state),
+  ),
+
+    
 );

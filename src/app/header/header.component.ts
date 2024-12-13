@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-    title = input('Test Your Knowledge!');
+    title = input('Flash-Focus');
     addingFlashCard = false;
     takingTest = false;
 
