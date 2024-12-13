@@ -32,3 +32,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 I watched these videos to get an overview of angualr and typescript:
   - https://www.youtube.com/watch?app=desktop&v=k5E2AVpwsko&t=294s
   - https://www.youtube.com/watch?v=oUmVFHlwZsI
+
+## NGRX Tutorial Video
+I watched this/these video/s to get an overview of ngrx:
+  - https://www.youtube.com/watch?v=kx0VTgTtSBg
