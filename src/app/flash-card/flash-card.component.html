@@ -1,39 +1,42 @@
-<div class="relative p-4 rounded-md shadow-lg outline outline-1 outline-black/5 hover:scale-105 transition-transform min-h-36">
+<div class="relative p-4 rounded-md shadow-lg outline outline-1 {{ resultColor }} outline-black/5 hover:scale-105 transition-transform min-h-36">
   <div class="flex flex-col gap-4">
     <div class="flex justify-end gap-2">
-      <!-- Card buttons -->
+    <!-- Card buttons -->
+      @if(!testMode) {
       <div class="flex justify-end gap-2">
-        <!-- Toggle answer -->
-        <button
-          (click)="show()"
-          class="p-2 rounded transition-colors hover:bg-black/5"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
-            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-        </button>
-        <!-- Edit card -->
-        <button
-          (click)="editToggle()"
-          class="p-2 rounded transition-colors hover:bg-black/5"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/>
-          </svg>
-        </button>
-        <!-- Delete card -->
-        <button
-          (click)="delete()"
-          class="p-2 rounded transition-colors hover:bg-red-500/5 hover:text-red-500"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash">
-            <path d="M3 6h18"/>
-            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-          </svg>
-        </button>
-      </div>
+      <!-- Toggle answer -->
+      <button
+        (click)="show()"
+        class="p-2 rounded transition-colors hover:bg-black/5"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+          <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+      <!-- Edit card -->
+      <button
+        (click)="editToggle()"
+        class="p-2 rounded transition-colors hover:bg-black/5"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/>
+        </svg>
+      </button>
+      <!-- Delete card -->
+      <button
+        (click)="delete()"
+        class="p-2 rounded transition-colors hover:bg-red-500/5 hover:text-red-500"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash">
+          <path d="M3 6h18"/>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+        </svg>
+      </button>
+    </div>
+      }
+      
     </div>
     <!-- Question and answer -->
     <div class="flex flex-col gap-2">
@@ -50,14 +53,43 @@
           class="p-2 rounded-md outline outline-1 outline-black/5"
           value="{{ flashCard().answer }}"
         />
-        <button 
+        <div>
+          <button 
         (click)="updateCard()"
         routerLink = "/" 
         class="align-self:flex-end  p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Submit</button>
         <button 
         (click)="editToggle()"
         routerLink = "/"
-        class ="align-self:flex-end p-2 rounded-md bg-blue-500/90 hover:bg-blue-500 text-white outline outline-1 outline-black/5">Cancel</button>
+        class ="align-self:flex-end p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5">Cancel</button>
+      
+        </div>
+        }
+      @else if (testMode) {
+        <div>{{ flashCard().question }}</div>
+        @if (showAnswer) {
+          <div class="text-end">{{ flashCard().answer }}</div>
+        }
+        <div>
+        <button 
+          (click)="markCorrect()"
+          class="align-self:flex-end  p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Correct</button>
+        @if(showAnswer) {
+          <button 
+          (click)="show()"
+          class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Hide</button>
+        }
+        @else {
+          <button 
+          (click)="show()"
+          class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Reveal</button>
+        }
+        <button 
+          (click)="markIncorrect()"
+          class ="align-self:flex-end p-2 rounded-md bg-red-500/90 hover:bg-red-500 text-white outline outline-1 outline-black/5">Incorrect</button>
+      
+        </div>
+
       }
       @else{
         <div>{{ flashCard().question }}</div>

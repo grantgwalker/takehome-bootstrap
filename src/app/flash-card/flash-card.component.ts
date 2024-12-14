@@ -6,7 +6,7 @@ import { FlashCardListComponent } from '../flash-card-list/flash-card-list.compo
 @Component({
   selector: 'app-flash-card',
   standalone: true,
-  imports: [ RouterLink, FlashCardListComponent ],
+  imports: [ RouterLink ],
   templateUrl: './flash-card.component.html',
   styleUrl: './flash-card.component.css'
 })
@@ -16,6 +16,8 @@ export class FlashCardComponent {
   expanded = false;
   showAnswer = false;
   editMode = false;
+  testMode = window.location.href.includes('take-test');
+  resultColor = "";
 
   toggle() {
     this.expanded = !this.expanded;
@@ -57,5 +59,26 @@ export class FlashCardComponent {
       answer: answerString
     });
   }
+
+  markCorrect() {    
+    this.resultColor = "bg-green-500/20";
+    this.FlashCardListComponent.updateFlashCard({
+      id: this.flashCard().id,
+      question: this.flashCard().question,
+      answer: this.flashCard().answer,
+      result: true
+    });
+  }
+
+  markIncorrect() {
+    this.resultColor = "bg-red-500/20";
+    this.FlashCardListComponent.updateFlashCard({
+      id: this.flashCard().id,
+      question: this.flashCard().question,
+      answer: this.flashCard().answer,
+      result: false
+    });
+  }
+
 
 }

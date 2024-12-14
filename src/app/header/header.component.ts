@@ -14,7 +14,7 @@ export class HeaderComponent {
     takingTest = false;
 
     addFlashCard() {
-        this.addingFlashCard = !this.addingFlashCard;
+        this.addingFlashCard = false;
         console.log(this.addingFlashCard);
     }
 
