@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { FlashCard } from '../app.models';
 import { FlashCardListComponent } from '../flash-card-list/flash-card-list.component';
 import { updateFlashCardAction } from '../state/flash-cards.reducer';
+import { selectFlashCardById } from '../state/flash-cards.selectors';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class FlashCardComponent {
 
   show() {
     this.showAnswer = !this.showAnswer;
+    this.store.select(selectFlashCardById(this.flashCard().id)).subscribe(card => console.log(card?.answer));
   }
 
   // I think deleting of a card falls in the responsibility of the list component
