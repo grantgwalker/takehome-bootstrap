@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { FlashCard } from '../app.models';
 import { FlashCardListComponent } from '../flash-card-list/flash-card-list.component';
-import { updateFlashCardAction } from '../state/flash-cards.reducer';
+import { updateFlashCardAPIAction } from '../state/flash-cards.reducer';
 import { selectFlashCardById } from '../state/flash-cards.selectors';
 
 
@@ -61,7 +61,7 @@ export class FlashCardComponent {
     // Store the value in a variable
     let answerString: string = answer;
 
-    this.store.dispatch(updateFlashCardAction({
+    this.store.dispatch(updateFlashCardAPIAction({
       flashCard:{
         id: this.flashCard().id,
         question: questionString,
