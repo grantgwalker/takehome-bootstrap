@@ -1,11 +1,14 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
+
 import { v4 as uuidv4 } from 'uuid';
 import { FlashCard } from '../app.models';
 import { FlashCardComponent } from '../flash-card/flash-card.component';
 import { addOneFlashCardAction, deleteFlashCardAction, updateFlashCardAction } from '../state/flash-cards.reducer';
 import { selectAllFlashCards } from '../state/flash-cards.selectors';
+
 
 @Injectable({ providedIn: 'root' })
 @Component({
@@ -19,23 +22,32 @@ export class FlashCardListComponent implements OnInit {
   store = inject(Store);
   allFlashCards = this.store.select(selectAllFlashCards);
 
-  ngOnInit(): void {
-    // Inject example cards
-    // Since this isn't hooked up to a backend, we generate UUIDs here
-    this.store.dispatch(addOneFlashCardAction({
-      flashCard: {
-        id: uuidv4(),
-        question: 'What is the capital of France?',
-        answer: 'Paris',
-      }
-    }));
-    this.store.dispatch(addOneFlashCardAction({
-      flashCard: {
-        id: uuidv4(),
-        question: 'What is the capital of Spain?',
-        answer: 'Madrid',
-      }
-    }));
+  isEmpty: boolean = false;
+
+  // Only populates the store with example flash cards if the store is empty
+  ngOnInit() {
+    this.allFlashCards.pipe(
+      map(cards => cards.length === 0)
+    ).subscribe(isEmpty => {
+      this.isEmpty = isEmpty;
+    });
+
+    if(this.isEmpty) {
+      this.store.dispatch(addOneFlashCardAction({
+            flashCard: {
+              id: uuidv4(),
+              question: 'EXAMPLE: What is the capital of France?',
+              answer: 'Paris',
+            }
+          }));
+          this.store.dispatch(addOneFlashCardAction({
+            flashCard: {
+              id: uuidv4(),
+              question: 'EXAMPLE: What is the capital of Spain?',
+              answer: 'Madrid',
+            }
+          }));
+    }
   }
 
   addFlashCard(flashCard: FlashCard): void {
