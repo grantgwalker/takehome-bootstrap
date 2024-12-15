@@ -1,13 +1,12 @@
 <div class="flex items-center justify-between">
     <span routerLink = "/" class = "text-xl" >{{ title() }}</span>
 </div>
-<h1>Take A Test</h1>
 @if(showResults) {
-    <div>
-        <h1>Results</h1>
-        <div>Percentage: {{ getPercentage() }}%</div>
+    <div style = "text-align: center">
+        <h1 class = "mb-4  font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl">Finished! How did you do?</h1>
+        <p class = "mb-6 md:text-1xl font-normal text-gray-500 sm:px-16 xl:px-48 dark:text-gray-900">Percentage: {{ getPercentage() }}% | Number Correct: {{ numberCorrect }} | Number Incorrect {{ numberIncorrect }}</p>
     </div>
-    <div>
+    <div style = "text-align: center">
         @if(getPercentage() !== 100) {
             <button 
             (click)="retryIncorrectOnly()"
@@ -23,8 +22,9 @@
     </div>
 }
 @else {
-  <div class="grid md:grid-cols-2 gap-8">
-    <div class="align-self:flex-center">
+    <h1 class = "mb-4 font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl">Taking Test...</h1>
+  <div style = "text-align: center" class="grid md:grid-cols-2 gap-8">
+    <div>
         <app-flash-card [flashCard]="flashCardsToTestOn[currentCardIndex]"></app-flash-card>
     </div>
     <div></div>

@@ -1,29 +1,69 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { FlashCardService } from './flashcard.service';
+
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, from, map, of, switchMap } from 'rxjs';
-import { addOneFlashCardAPIAction, addOneFlashCardAPIFailureAction, addOneFlashCardAPISuccessAction } from './flash-cards.reducer';
+import { from, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { addOneFlashCardAPIAction, addOneFlashCardAPIFailureAction, addOneFlashCardAPISuccessAction, deleteFlashCardAPIAction, deleteFlashCardAPIFailureAction, deleteFlashCardAPISuccessAction, loadFlashcardsAPIAction, loadFlashcardsAPIFailureAction, loadFlashcardsAPISuccessAction, updateFlashCardAPIAction, updateFlashCardAPIFailureAction, updateFlashCardAPISuccessAction } from './flash-cards.reducer';
 
 @Injectable()
 export class FlashCardsEffects {
-  actions$ = inject(Actions);
-  http = inject(HttpClient);
 
-  // TODO: Implement an effect to save flash cards to a backend
-  // NOTE: This is an example of how you might implement an effect to save flash cards to a backend.
-  // You will need three actions: addOneFlashCardAPI, addOneFlashCardAPISuccess, and addOneFlashCardAPIFailure
-  // each with their own appropriate parameters.
-  // This effect will trigger when `addOneFlashCardAPI` is dispatched.
-  addOneFlashCardAPI$ = createEffect(() => this.actions$.pipe(
-    ofType(addOneFlashCardAPIAction),
-    switchMap(({ flashCard }) => 
-      from(this.http.post('/some-api/flash-cards/add', flashCard)).pipe(
-        map(() => addOneFlashCardAPISuccessAction({ flashCard })),
-        catchError(error => of(addOneFlashCardAPIFailureAction({ flashCard, error })))
+  private actions$: Actions = inject(Actions);
+  private flashCardService: FlashCardService = inject(FlashCardService);
+
+  loadFlashcards$ = createEffect(() =>this.actions$.pipe(
+      ofType(loadFlashcardsAPIAction),
+      switchMap(() =>
+        from(this.flashCardService.getAllFlashcards()).pipe(
+          map(flashCards => loadFlashcardsAPISuccessAction({ flashCards: flashCards ?? [] })),
+          catchError(error => of(loadFlashcardsAPIFailureAction({ error })))
+        )
       )
     )
-  ));
+  );
+  addFlashcard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addOneFlashCardAPIAction),
+      switchMap(action =>
+        from(this.flashCardService.createFlashcard(action.flashCard)).pipe(
+          map(flashCard => addOneFlashCardAPISuccessAction({ flashCard })),
+          catchError( error => of(addOneFlashCardAPIFailureAction({ 
+            flashCard: action.flashCard, 
+            error })))
+        )
+      )
+    )
+  );
+  
+  updateFlashcard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateFlashCardAPIAction),
+      switchMap(action =>
+        from(this.flashCardService.updateFlashCard(action.flashCard)).pipe(
+          map(flashCard => updateFlashCardAPISuccessAction({ flashCard })),
+          catchError(error => of(updateFlashCardAPIFailureAction({ 
+            flashCard: action.flashCard,
+            error })))
+        )
+      )
+    )
+  );
+
+  deleteFlashcard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteFlashCardAPIAction),
+      switchMap(action =>
+        from(this.flashCardService.deleteFlashCard(action.id)).pipe(
+          map(() => deleteFlashCardAPISuccessAction({ id: action.id })),
+          catchError(error => of(deleteFlashCardAPIFailureAction({
+            id: action.id,
+            error })))
+        )
+      )
+    )
+  );
+}
 
   // Similarly, you should fetch the flash cards from the backend when the application starts via
   // an effect which triggers on application load.
-}
