@@ -1,0 +1,27 @@
+
+<!-- TODO: fix the buttons on the app header not disappearing the first time. Takes two clicks for them to disappear. --> 
+<app-header></app-header>
+<h1>Add A New Card</h1>
+<div class="relative p-4 rounded-md shadow-lg outline outline-1 outline-black/5 transition-transform min-h-36">
+    <div class="flex flex-col gap-4">
+      <div class="flex justify-end gap-2">
+        <!-- Card User Input Values -->
+         <h1>Question</h1>
+         <input id="question" placeholder="Enter Question Here..." type="text" >
+      <div class="flex flex-col gap-2">
+        <h1>Answer</h1>
+        <input id="answer" placeholder="Enter Answer Here..." type ="text" >
+      </div>
+      </div>
+      
+    </div>
+    <button 
+    (click)="addCard()"
+    routerLink = "/" 
+    class="align-self:flex-end  p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Submit</button>
+  <button 
+    routerLink = "/"
+    class ="align-self:flex-end p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5">Cancel</button>
+  </div>
+
+<app-flash-card-list></app-flash-card-list>

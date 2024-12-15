@@ -1,0 +1,16 @@
+<div class="flex items-center justify-between">
+  <span routerLink = "/" class = "text-xl" >{{ title() }}</span>
+  <div class="flex items-center gap-4">
+    <button 
+      (click)="addFlashCard()"
+      routerLink = "/add-flash-card" 
+      class="p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Add Card</button>
+    <!-- TODO: Implement take test function -->
+    <button 
+      (click)="takeTest()"
+      routerLink="/take-test"
+      class ="p-2 rounded-md bg-blue-500/90 hover:bg-blue-500 text-white outline outline-1 outline-black/5">Take Test</button>
+  </div>
+    
+    
+</div>
