@@ -1,7 +1,7 @@
 import { Component, inject, Injectable, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FlashCard } from '../app.models';
 import { FlashCardComponent } from "../flash-card/flash-card.component";
 import { selectAllFlashCards, selectFlashCardById } from '../state/flash-cards.selectors';
@@ -21,12 +21,16 @@ export class TakeTestComponent {
   numberCorrect = 0;
   numberIncorrect = 0;
   showResults = false;
+  showAnswer = false;
   allFlashCards$: Observable<FlashCard[]> = this.store.select(selectAllFlashCards);
-  // The state of the test must remain static, 
+  // The state of the test must remain static,
   // this is why the flashcards are put into arrays instead of being directly accessed from the store.
-  allFlashCards: FlashCard[] = [];
   incorrectFlashCards: FlashCard[] = [];
+  allFlashCards: FlashCard[] = [];
   flashCardsToTestOn: FlashCard[] = [];
+  currentCardIndex = 0;
+  currentAnswer = '';
+
 
   // On initialization, get all the flash cards from the store
   // and add them to the list of cards to test on.
@@ -49,27 +53,6 @@ export class TakeTestComponent {
 
   // When the user clicks on the see results button, the results are calculated.
   seeResults() {
-    this.incorrectFlashCards = [];
-    this.numberCorrect = 0;
-    this.numberIncorrect = 0;
-    // for each card in flash cards to test on,
-    // grab the card from the store and check the result.
-    for (let flashCard of this.flashCardsToTestOn) {
-      this.store.select(selectFlashCardById(flashCard.id)).pipe(
-        // Filter out undefined values
-        filter((card): card is FlashCard => card !== undefined)
-      ).subscribe(card => {
-        console.log(card.question);
-        if (card.result === true) {
-          this.numberCorrect++;
-        } else {
-          this.numberIncorrect++;
-          // If the card is incorrect, add it to a separate array 
-          // so the user can select to retry them only.
-          this.incorrectFlashCards.push(card);
-        }
-      });
-    }
     this.showResults = true;
   }
 
@@ -79,15 +62,56 @@ export class TakeTestComponent {
 
   retryAll() {
     this.updateAllFlashCardsArray();
-    this.showResults = false;
     this.flashCardsToTestOn = this.allFlashCards;
-    this.incorrectFlashCards = [];
+    this.resetTest();
   }
 
   retryIncorrectOnly() {
-    this.showResults = false;
     this.flashCardsToTestOn = this.incorrectFlashCards;
+    this.resetTest();
+  }
+
+  resetTest() {
+    this.showResults = false;
+    this.numberCorrect = 0;
+    this.numberIncorrect = 0;
+    this.currentCardIndex = 0;
     // Must clear the incorrect cards to properly restart the test.
     this.incorrectFlashCards = [];
   }
+
+  show() {
+    this.showAnswer = !this.showAnswer;
+    this.store.select(selectFlashCardById(this.flashCardsToTestOn[this.currentCardIndex].id)).subscribe(card => console.log(card?.answer));
+  }
+
+  // Method to mark the card as correct
+  // Updating a card is specific to the card component, therefore it is implemented here.
+  markCorrect() {
+    this.numberCorrect++;
+    this.nextCard();
+    if(this.isTestComplete()){
+      this.showResults = true;
+    }
+  }
+
+  // Method to mark the card as incorrect
+  // Updating a card is specific to the card component, therefore it is implemented here.
+  markIncorrect() {
+    this.numberIncorrect++;
+    this.incorrectFlashCards.push(this.flashCardsToTestOn[this.currentCardIndex]);
+    this.nextCard();
+    if(this.isTestComplete()){
+      this.showResults = true;
+    }
+  }
+
+  nextCard() {
+    this.currentCardIndex++;
+  }
+
+  isTestComplete() {
+    return this.currentCardIndex >= this.flashCardsToTestOn.length;
+  }
+
 }
