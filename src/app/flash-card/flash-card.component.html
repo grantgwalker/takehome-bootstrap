@@ -1,4 +1,4 @@
-<div class="relative p-4 rounded-md shadow-lg outline outline-1 {{ resultColor }} outline-black/5 hover:scale-105 transition-transform min-h-36">
+<div class="relative p-4 rounded-md shadow-lg outline outline-1 outline-black/5 hover:scale-105 transition-transform min-h-36">
   <div class="flex flex-col gap-4">
     <div class="flex justify-end gap-2">
     <!-- Card buttons -->
@@ -65,32 +65,6 @@
       
         </div>
         }
-      @else if (testMode) {
-        <div>{{ flashCard().question }}</div>
-        @if (showAnswer) {
-          <div class="text-end">{{ flashCard().answer }}</div>
-        }
-        <div>
-        <button 
-          (click)="markCorrect()"
-          class="align-self:flex-end  p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Correct</button>
-        @if(showAnswer) {
-          <button 
-          (click)="show()"
-          class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Hide</button>
-        }
-        @else {
-          <button 
-          (click)="show()"
-          class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Reveal</button>
-        }
-        <button 
-          (click)="markIncorrect()"
-          class ="align-self:flex-end p-2 rounded-md bg-red-500/90 hover:bg-red-500 text-white outline outline-1 outline-black/5">Incorrect</button>
-      
-        </div>
-
-      }
       @else{
         <div>{{ flashCard().question }}</div>
         @if (showAnswer) {

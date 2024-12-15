@@ -22,7 +22,6 @@ export class FlashCardComponent {
   showAnswer = false;
   editMode = false;
   testMode = window.location.href.includes('take-test');
-  resultColor = "";
 
   toggle() {
     this.expanded = !this.expanded;
@@ -69,31 +68,4 @@ export class FlashCardComponent {
         answer: answerString
     }}));
   }
-
-  // Method to mark the card as correct
-  // Updating a card is specific to the card component, therefore it is implemented here.
-  markCorrect() {    
-    this.resultColor = "bg-gray-500/20";
-    this.store.dispatch(updateFlashCardAction({
-      flashCard: {
-        id: this.flashCard().id,
-        question: this.flashCard().question,
-        answer: this.flashCard().answer,
-        result: true
-    }}));
-  }
-  // Method to mark the card as incorrect
-  // Updating a card is specific to the card component, therefore it is implemented here.
-  markIncorrect() {
-    this.resultColor = "bg-gray-500/20";
-    this.store.dispatch(updateFlashCardAction({
-      flashCard: {
-        id: this.flashCard().id,
-        question: this.flashCard().question,
-        answer: this.flashCard().answer,
-        result: false
-    }}));
-  }
-
-
 }
