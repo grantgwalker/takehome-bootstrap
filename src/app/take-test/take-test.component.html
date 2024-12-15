@@ -27,26 +27,11 @@
     <div class="align-self:flex-center">
         <app-flash-card [flashCard]="flashCardsToTestOn[currentCardIndex]"></app-flash-card>
     </div>
-    <div>
-        @if(showAnswer){
-        <div>{{ this.flashCardsToTestOn[this.currentCardIndex].answer }}</div>
-    }
-    </div>
-    
+    <div></div>
     <div>
         <button 
         (click)="markCorrect()"
         class="align-self:flex-center  p-2 rounded-md bg-green-500/90 hover:bg-green-500 text-white outline outline-1 outline-black/5" >Correct</button>
-        @if(showAnswer) {
-        <button 
-        (click)="show()"
-        class="align-self:flex-center  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Hide</button>
-        }
-        @else {
-        <button 
-        (click)="show()"
-        class="align-self:flex-center  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5" >Reveal</button>
-        }
         <button 
         (click)="markIncorrect()"
         class ="align-self:flex-center p-2 rounded-md bg-red-500/90 hover:bg-red-500 text-white outline outline-1 outline-black/5">Incorrect</button>
