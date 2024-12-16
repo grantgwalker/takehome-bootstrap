@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FlashCard } from '../app.models';
 import { FlashCardComponent } from "../flash-card/flash-card.component";
-import { selectAllFlashCards, selectFlashCardById } from '../state/flash-cards.selectors';
+import { loadFlashcardsAPIAction } from '../state/flash-cards.reducer';
+import { selectAllFlashCards } from '../state/flash-cards.selectors';
 
 
 @Injectable({ providedIn: 'root' })
@@ -32,15 +33,17 @@ export class TakeTestComponent {
   currentAnswer = '';
 
 
-  // On initialization, get all the flash cards from the store
+  // On initialization, get all flash cards from the database and pull from store.
   // and add them to the list of cards to test on.
   ngOnInit() {
     this.updateAllFlashCardsArray();
     this.flashCardsToTestOn = this.allFlashCards;
   }
 
-  // Update the array of all flash cards from the store.
+  // Update the array of all flash cards from the database and pull from store.
   updateAllFlashCardsArray() {
+    this.store.dispatch(loadFlashcardsAPIAction());
+    
     this.allFlashCards = [];
 
     let subscription = this.allFlashCards$.subscribe(flashCards => {
@@ -56,21 +59,25 @@ export class TakeTestComponent {
     this.showResults = true;
   }
 
+  // Calculate the percentage of correct answers for the test.
   getPercentage() {
       return Math.round((this.numberCorrect / (this.numberCorrect + this.numberIncorrect)) * 100) ?? 0;
     }
 
+  // If retrying on all cards, reset the test and test on all cards.
   retryAll() {
     this.updateAllFlashCardsArray();
     this.flashCardsToTestOn = this.allFlashCards;
     this.resetTest();
   }
 
+  // If retrying on incorrect cards only, reset the test and test on incorrect cards.
   retryIncorrectOnly() {
     this.flashCardsToTestOn = this.incorrectFlashCards;
     this.resetTest();
   }
 
+  // Reset the test to be taken again.
   resetTest() {
     this.showResults = false;
     this.numberCorrect = 0;
@@ -82,7 +89,6 @@ export class TakeTestComponent {
 
   show() {
     this.showAnswer = !this.showAnswer;
-    this.store.select(selectFlashCardById(this.flashCardsToTestOn[this.currentCardIndex].id)).subscribe(card => console.log(card?.answer));
   }
 
   // Method to mark the card as correct
@@ -106,10 +112,12 @@ export class TakeTestComponent {
     }
   }
 
+  // moves the index so that the next card is displayed in the html
   nextCard() {
     this.currentCardIndex++;
   }
 
+  // determine whether there is any more cards left.
   isTestComplete() {
     return this.currentCardIndex >= this.flashCardsToTestOn.length;
   }

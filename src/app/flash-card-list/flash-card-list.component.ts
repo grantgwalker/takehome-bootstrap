@@ -1,7 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, Injectable, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
 
 import { FlashCard } from '../app.models';
 import { FlashCardComponent } from '../flash-card/flash-card.component';
@@ -23,18 +22,10 @@ export class FlashCardListComponent implements OnInit {
 
   isEmpty: boolean = false;
 
-  // Only populates the store with example flash cards if the store is empty
+  // On Init, load all flash cards from DynamoDB then select all from store
   ngOnInit() {
     this.store.dispatch(loadFlashcardsAPIAction());
     this.allFlashCards = this.store.select(selectAllFlashCards);
-    this.allFlashCards.pipe(
-      map(cards => console.log(cards.length))
-    ).subscribe();
-    this.allFlashCards.pipe(
-      map(cards => cards.length === 0)
-    ).subscribe(isEmpty => {
-      this.isEmpty = isEmpty;
-    });
 
   }
 

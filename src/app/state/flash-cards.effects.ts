@@ -12,6 +12,7 @@ export class FlashCardsEffects {
   private actions$: Actions = inject(Actions);
   private flashCardService: FlashCardService = inject(FlashCardService);
 
+  // loads all flashcards from the dynamoDB table
   loadFlashcards$ = createEffect(() =>this.actions$.pipe(
       ofType(loadFlashcardsAPIAction),
       switchMap(() =>
@@ -22,6 +23,8 @@ export class FlashCardsEffects {
       )
     )
   );
+
+  // adds flashcard to the dynamoDB table
   addFlashcard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addOneFlashCardAPIAction),
@@ -36,6 +39,7 @@ export class FlashCardsEffects {
     )
   );
   
+  // updates flashcard in the dynamoDB table
   updateFlashcard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateFlashCardAPIAction),
@@ -50,6 +54,7 @@ export class FlashCardsEffects {
     )
   );
 
+  // deletes flashcard from the dynamoDB table
   deleteFlashcard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteFlashCardAPIAction),
@@ -64,6 +69,3 @@ export class FlashCardsEffects {
     )
   );
 }
-
-  // Similarly, you should fetch the flash cards from the backend when the application starts via
-  // an effect which triggers on application load.
