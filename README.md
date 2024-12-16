@@ -3,9 +3,12 @@
 Please see the provided requirements document for project guidance after cloning this repo.
 
 # Notes on the branches
-- 'main' holds the version that connects to an AWS DynamoDB, however it requires credentials so it will not run locally. If you want to run it, I can provide the environments file for a short amount of time, but will delete the keys after. I am trying to get it hosted on a server so that it can be played around with and will let you know if I am able to do that in time. 
-- 'Runs-Locally-No-Database' is the version that you can pull and run locally. 
-- 'Flash-Cards-w/-Multiple-Test-View' is a version where the user can take the test while viewing all cards on the screen (instead of one at a time).
+## 'main' 
+- holds the version that connects to an AWS DynamoDB, however it requires credentials so it will not run locally. If you want to run it, I can provide the environments file for a short amount of time, but will delete the keys after. I am trying to get it hosted on a server so that it can be played around with and will let you know if I am able to do that in time. 
+## 'Runs-Locally-No-Database' 
+- the version that you can pull and run locally. 
+## 'Flash-Cards-w/-Multiple-Test-View' 
+- a version where the user can take the test while viewing all cards on the screen (instead of one at a time).
 
 
 
