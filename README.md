@@ -8,7 +8,7 @@ Please see the provided requirements document for project guidance after cloning
 ## 'Runs-Locally-No-Database' 
 - the version that you can pull and run locally. 
 ## 'Flash-Cards-w/-Multiple-Test-View' 
-- a version where the user can take the test while viewing all cards on the screen (instead of one at a time).
+- a deprecated version where the user can take the test while viewing all cards on the screen (instead of one at a time).
 
 
 
