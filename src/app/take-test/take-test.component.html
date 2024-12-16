@@ -8,9 +8,12 @@
         <div>Percentage: {{ getPercentage() }}%</div>
     </div>
     <div>
-        <button 
-            (click)="retryIncorrectOnly()"
-            class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5">Retry Incorrect Cards</button>
+        @if(numberIncorrect !==0) {
+            <button 
+                (click)="retryIncorrectOnly()"
+                class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5">Retry Incorrect Cards</button>
+        }
+
         <button 
             (click)="retryAll()"
             class="align-self:flex-end  p-2 rounded-md bg-gray-500/90 hover:bg-gray-500 text-white outline outline-1 outline-black/5">Retry All</button>
